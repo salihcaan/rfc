@@ -1,0 +1,17 @@
+# Example pipeline (GitHub Actions syntax; port to your CI if you use GitLab/Jenkins).
+# On every merge to main: render Mermaid → publish build/ to the internal wiki.
+name: publish-specs
+on:
+  push:
+    branches: [main]
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm i -g @mermaid-js/mermaid-cli
+      - run: ./scripts/render-diagrams.sh
+      # Replace with your wiki's import/publish step (REST API, CLI, or static site deploy).
+      - run: echo "TODO: push build/ to internal wiki"
